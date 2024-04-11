@@ -42,7 +42,7 @@ the relationship between inputs an outputs - on your diagram list what your inpu
 
 ### Diagram for our Almond Yield Function
 
-![Almond Yield Model Diagram](Almond_Yield_Model.png){width="800"}
+![Almond Yield Model Diagram](almond_yield_model.png){width="500"}
 
 ## 2. Implement your diagram as an R function
 
