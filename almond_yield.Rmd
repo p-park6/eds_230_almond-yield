@@ -3,10 +3,12 @@ title: "Almond Yield Assignment 2"
 author: "Patty Park  & Vanessa Salgado"
 output:
   html_document: default
+  code_folding: hide
+  toc: true
+  toc_float: true
   pdf_document: default
 ---
 
-# Almond Yield Assignement 2 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
@@ -40,7 +42,7 @@ the relationship between inputs an outputs - on your diagram list what your inpu
 
 ### Diagram for our Almond Yield Function
 
-[INSERT HERE]
+![Almond Yield Model Diagram](Almond_Yield_Model.png){width="800"}
 
 ## 2. Implement your diagram as an R function
 
@@ -73,8 +75,7 @@ climate_data <- read_csv(here("Data", "clim.csv"))
 
 ### Data Cleaning
 
-The climate data is going to need to be preprocessed becase the the model
-uses climate data from a particular month, yet we have ALL of the climate measurements for multiple times per day.
+The climate data is going to need to be preprocessed becase the the model uses climate data from a particular month, yet we have ALL of the climate measurements for multiple times per day.
 
 We chose to preprocess within our function to make it easier for the user to get the necessary output they are interested in. Therefore the function takes in our climate dataset as an csv as an input.
 
@@ -103,7 +104,7 @@ precip <- climate_data %>%
   select(-month)
   
 # join dataset together
-yield_anomaly <- left_join(min_temp, precip) 
+yield <- left_join(min_temp, precip) 
 
 ```
 
@@ -111,25 +112,25 @@ yield_anomaly <- left_join(min_temp, precip)
 
 After cleaning up the dataset, we are now going to input those value into our equations to give us the almond yields we are interested in. In this case, we want to know the maximum, minimum, and mean yields over all of the years.
 
-
 ```{r almond yield}
 #create the equation needed to find almond yield
-yield_anomaly <- yield_anomaly %>% 
-  mutate(yield_anomaly = -0.015*feb_tmin_c - 0.0046*feb_tmin_c^2 - 0.07*jan_precip_mm + 0.0043*jan_precip_mm^2 + 0.28) # calc based on  equation from lobell et al. 2006
+yield <- yield %>% 
+  mutate(yield_tons = -0.015*feb_tmin_c - 0.0046*feb_tmin_c^2 - 0.07*jan_precip_mm + 0.0043*jan_precip_mm^2 + 0.28) # calc based on  equation from lobell et al. 2006
 
 # calculate the min, max, and mean yield over the whole time period
-min_yield <- min(yield_anomaly$yield_anomaly)
-max_yield <- max(yield_anomaly$yield_anomaly)
-mean_yield <- mean(yield_anomaly$yield_anomaly)
+min_yield <- min(yield$yield_tons)
+max_yield <- max(yield$yield_tons)
+mean_yield <- mean(yield$yield_tons)
 
 # print the min, max, and mean
-print(paste("Minimum Yield:", round(min_yield, 2), "ton(s) per acre |",
-                     "Maximum Yield:", round(max_yield, 2), "ton(s) per acre |",
+print(paste("Minimum Yield:", round(min_yield, 2), "ton(s) per acre ;",
+                     "Maximum Yield:", round(max_yield, 2), "ton(s) per acre ;",
                      "Mean Yield:", round(mean_yield, 2), "ton(s) per acre"))
 
 ```
 
 Below is how you can call in the function created on an R script.
+
 ```{r, fuction_call}
 # sourcing in almond_yield function
 source("almond_yield.R")
