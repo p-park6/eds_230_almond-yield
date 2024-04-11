@@ -1,0 +1,302 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Almond Yield Assignment 2},
+  pdfauthor={Patty Park \& Vanessa Salgado},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Almond Yield Assignment 2}
+\author{Patty Park \& Vanessa Salgado}
+\date{}
+
+\begin{document}
+\maketitle
+
+\hypertarget{almond-yield-assignement-2}{%
+\section{Almond Yield Assignement 2}\label{almond-yield-assignement-2}}
+
+\hypertarget{draw-diagram-to-represent-your-model---how-it-will-translate-inputs-to-outputs-with-parameters-that-shape}{%
+\subsection{1. Draw diagram to represent your model - how it will
+translate inputs to outputs, with parameters that
+shape}\label{draw-diagram-to-represent-your-model---how-it-will-translate-inputs-to-outputs-with-parameters-that-shape}}
+
+the relationship between inputs an outputs - on your diagram list what
+your inputs, parameters and outputs are with units
+
+\begin{itemize}
+\tightlist
+\item
+  Inputs:
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Climate Dataset
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Parametes:
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Precipitation in mm for January
+\item
+  Minimum temperature in Celcius for February
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Outputs:
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Mean Almond Yield
+\item
+  Maximum Almond Yield
+\item
+  Minimum Almond Yield
+\end{enumerate}
+
+\hypertarget{diagram-for-our-almond-yield-function}{%
+\subsubsection{Diagram for our Almond Yield
+Function}\label{diagram-for-our-almond-yield-function}}
+
+{[}INSERT HERE{]}
+
+\hypertarget{implement-your-diagram-as-an-r-function}{%
+\subsection{2. Implement your diagram as an R
+function}\label{implement-your-diagram-as-an-r-function}}
+
+Our goal is to implement a simple model of almond yield anomaly response
+to climate The climate dataframe includes daily time series of minimum,
+maximum daily temperatures and precipitation.
+
+We would like to ouput the yields for yearly almond yields.
+
+Our model will use the Almond transfer function stated below :
+
+\[Almond Yield = -0.015T_{n,2} - 0.0046T^2_{n,2} - 0.07P_1 + 0.0043P^2_1 + 0.28\]
+\{source: Lobell et al.(2006)\}
+
+where:
+
+\(T_n =\)Minimum Temperature in Celcius for the Month of Janurary
+
+\(P_1 =\)Precipiation in mm for the Month of February
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\#               Read In Data}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\#read in txt file}
+\CommentTok{\#climate\_data \textless{}{-} read.table(file="../Data/clim.txt", sep="")}
+
+\CommentTok{\#write the csv to have for future use}
+\CommentTok{\# write\_csv(climate\_data, here::here("Data", "clim.csv"))}
+
+\NormalTok{climate\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"Data"}\NormalTok{, }\StringTok{"clim.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-cleaning}{%
+\subsubsection{Data Cleaning}\label{data-cleaning}}
+
+The climate data is going to need to be preprocessed becase the the
+model uses climate data from a particular month, yet we have ALL of the
+climate measurements for multiple times per day.
+
+We chose to preprocess within our function to make it easier for the
+user to get the necessary output they are interested in. Therefore the
+function takes in our climate dataset as an csv as an input.
+
+Below is how we did the data cleaning portion. Note that we used the
+minimum temperature found in the daily reading, which is outputted for
+the whole year. We also summed the precipitation amount also found in
+the daily reading which is outputted for the whole year.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\#                  data cleaning }
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+  
+\CommentTok{\# subset min\_temp for feb }
+\NormalTok{min\_temp }\OtherTok{\textless{}{-}}\NormalTok{ climate\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(month, year) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# grouping by month and year}
+  \FunctionTok{filter}\NormalTok{(month }\SpecialCharTok{==} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# select just feb}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{feb\_tmin\_c =} \FunctionTok{mean}\NormalTok{(tmin\_c)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#find mean temp per year}
+  \FunctionTok{group\_by}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{month) }\CommentTok{\#take our month from dataframe}
+  
+\CommentTok{\# calculate total january precipitation for each year}
+\NormalTok{precip }\OtherTok{\textless{}{-}}\NormalTok{ climate\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(month, year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(month }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# select just jan}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{jan\_precip\_mm =} \FunctionTok{sum}\NormalTok{(precip)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#find sum of precip per year}
+  \FunctionTok{group\_by}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{month)}
+  
+\CommentTok{\# join dataset together}
+\NormalTok{yield\_anomaly }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(min\_temp, precip) }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{find-almond-yield}{%
+\subsubsection{Find Almond Yield}\label{find-almond-yield}}
+
+After cleaning up the dataset, we are now going to input those value
+into our equations to give us the almond yields we are interested in. In
+this case, we want to know the maximum, minimum, and mean yields over
+all of the years.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#create the equation needed to find almond yield}
+\NormalTok{yield\_anomaly }\OtherTok{\textless{}{-}}\NormalTok{ yield\_anomaly }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{yield\_anomaly =} \SpecialCharTok{{-}}\FloatTok{0.015}\SpecialCharTok{*}\NormalTok{feb\_tmin\_c }\SpecialCharTok{{-}} \FloatTok{0.0046}\SpecialCharTok{*}\NormalTok{feb\_tmin\_c}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}} \FloatTok{0.07}\SpecialCharTok{*}\NormalTok{jan\_precip\_mm }\SpecialCharTok{+} \FloatTok{0.0043}\SpecialCharTok{*}\NormalTok{jan\_precip\_mm}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+} \FloatTok{0.28}\NormalTok{) }\CommentTok{\# calc based on  equation from lobell et al. 2006}
+
+\CommentTok{\# calculate the min, max, and mean yield over the whole time period}
+\NormalTok{min\_yield }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(yield\_anomaly}\SpecialCharTok{$}\NormalTok{yield\_anomaly)}
+\NormalTok{max\_yield }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(yield\_anomaly}\SpecialCharTok{$}\NormalTok{yield\_anomaly)}
+\NormalTok{mean\_yield }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(yield\_anomaly}\SpecialCharTok{$}\NormalTok{yield\_anomaly)}
+
+\CommentTok{\# print the min, max, and mean}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Minimum Yield:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(min\_yield, }\DecValTok{2}\NormalTok{), }\StringTok{"ton(s) per acre |"}\NormalTok{,}
+                     \StringTok{"Maximum Yield:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(max\_yield, }\DecValTok{2}\NormalTok{), }\StringTok{"ton(s) per acre |"}\NormalTok{,}
+                     \StringTok{"Mean Yield:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(mean\_yield, }\DecValTok{2}\NormalTok{), }\StringTok{"ton(s) per acre"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Minimum Yield: -0.36 ton(s) per acre | Maximum Yield: 1919.98 ton(s) per acre | Mean Yield: 181.45 ton(s) per acre"
+\end{verbatim}
+
+Below is how you can call in the function created on an R script.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# sourcing in almond\_yield function}
+\FunctionTok{source}\NormalTok{(}\StringTok{"almond\_yield.R"}\NormalTok{)}
+
+\FunctionTok{almond\_yield}\NormalTok{(climate\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Minimum Yield:-0.36ton(s) per acre |Maximum Yield:1919.98ton(s) per acre |Mean Yield:181.45ton(s) per acre"
+\end{verbatim}
+
+\end{document}

@@ -1,7 +1,9 @@
 ---
 title: "Almond Yield Assignment 2"
 author: "Patty Park  & Vanessa Salgado"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 # Almond Yield Assignement 2 
@@ -12,6 +14,9 @@ library(tidyverse)
 library(purrr)
 
 library(ggpubr)
+
+library(here)
+
 ```
 
 ## 1. Draw diagram to represent your model - how it will translate inputs to outputs, with parameters that shape
@@ -51,23 +56,19 @@ where:
 
 $T_n =$Minimum Temperature in Celcius for the Month of Janurary
 
-\$P_1 = \$Precipiation in mm for the Month of February
+$P_1 =$Precipiation in mm for the Month of February
 
 ```{r read in data}
 # --------------------------------------
 #               Read In Data
 # ---------------------------------------
 #read in txt file
-climate_data <- read.table(file="../Data/clim.txt", sep="")
+#climate_data <- read.table(file="../Data/clim.txt", sep="")
 
 #write the csv to have for future use
 # write_csv(climate_data, here::here("Data", "clim.csv"))
 
-climate_data <- read_csv("../Data/clim.csv")
-
-climate_data_month_1 <- climate_data %>% 
-  filter(month ==1)
-
+climate_data <- read_csv(here("Data", "clim.csv"))
 ```
 
 ### Data Cleaning
