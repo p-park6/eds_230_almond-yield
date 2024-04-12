@@ -34,10 +34,8 @@ almond_yield<- function(dataset) {
   mean_yield <- mean(yield$yield_tons)
   
   # print the min, max, and mean
-  return(cat(paste0("Minimum Yield: ", round(min_yield, 2), "ton(s) per acre, \n",
-                      "Maximum Yield: ", round(max_yield, 2), "ton(s) per acre, \n",
+  return(cat(paste0("Minimum Yield: ", round(min_yield, 2), "ton(s) per acre \n",
+                      "Maximum Yield: ", round(max_yield, 2), "ton(s) per acre \n",
                       "Mean Yield: ", round(mean_yield, 2), "ton(s) per acre")))
   
 }
-
-almond_yield(climate_data)

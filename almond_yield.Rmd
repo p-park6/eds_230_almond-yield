@@ -42,23 +42,25 @@ the relationship between inputs an outputs - on your diagram list what your inpu
 
 ### Diagram for our Almond Yield Function
 
+Our diagram shows inputs, parameters and outputs from out dataset.
+
 ![Almond Yield Model Diagram](almond_yield_model.png){width="500"}
 
 ## 2. Implement your diagram as an R function
 
 Our goal is to implement a simple model of almond yield anomaly response to climate The climate dataframe includes daily time series of minimum, maximum daily temperatures and precipitation.
 
-We would like to ouput the yields for yearly almond yields.
+We would like to output the yields for yearly almond yields.
 
-Our model will use the Almond transfer function stated below :
+Our model will use the Almond transfer equation stated below :
 
 $$Almond Yield = -0.015T_{n,2} - 0.0046T^2_{n,2} - 0.07P_1 + 0.0043P^2_1 + 0.28$$ {source: Lobell et al.(2006)}
 
 where:
 
-$T_n =$Minimum Temperature in Celcius for the Month of Janurary
+$T_{n2} =$Minimum Temperature in Celcius for the Month of February 
 
-$P_1 =$Precipiation in mm for the Month of February
+$P_1 =$Precipiation in mm for the Month of January
 
 ```{r read in data}
 # --------------------------------------
@@ -75,16 +77,15 @@ climate_data <- read_csv(here("Data", "clim.csv"))
 
 ### Data Cleaning
 
-The climate data is going to need to be preprocessed becase the the model uses climate data from a particular month, yet we have ALL of the climate measurements for multiple times per day.
+The climate data is going to need to be preprocessed because the the model uses climate data from a particular month, yet we have ALL of the climate measurements for multiple times per day.
 
-We chose to preprocess within our function to make it easier for the user to get the necessary output they are interested in. Therefore the function takes in our climate dataset as an csv as an input.
+We chose to preprocess within our function to make it easier for the user to get the necessary output they are interested in and for future use in order to generalize for other crops. Therefore the function takes in our climate dataset as an csv as an input.
 
-Below is how we did the data cleaning portion. Note that we used the minimum temperature found in the daily reading, which is outputted for the whole year. We also summed the precipitation amount also found in the daily reading which is outputted for the whole year.
+Below is our data cleaning process. Note that we used the mean minimum temperature found after grouping by month and year. According to the equation adapted by Lobell et al. 2006, monthly averages of minimum temperature were computed. We also summed the precipitation amount also found in the daily reading which is outputted for the whole year and month of January.
 
 ```{r, data cleaning}
-
 # -----------------------------------------------
-#                  data cleaning 
+#                  Data Cleaning 
 # -----------------------------------------------
   
 # subset min_temp for feb 
@@ -106,13 +107,20 @@ precip <- climate_data %>%
 # join dataset together
 yield <- left_join(min_temp, precip) 
 
+# showing joined dataset to show that min temp and precip are in one dataset
+head(yield)
 ```
 
 ### Find Almond Yield
 
-After cleaning up the dataset, we are now going to input those value into our equations to give us the almond yields we are interested in. In this case, we want to know the maximum, minimum, and mean yields over all of the years.
+We input those `feb_tmin_c` and `jan_precip_mm` into our equations to give us the almond yields we are interested in. In this case, we want to output the maximum, minimum, and mean yields over all of the years.
+
+From the joined `yield` dataset, we created a new column with the almond yield equation.
 
 ```{r almond yield}
+# -----------------------------------------------
+#                  Almond Yield Equation
+# -----------------------------------------------
 #create the equation needed to find almond yield
 yield <- yield %>% 
   mutate(yield_tons = -0.015*feb_tmin_c - 0.0046*feb_tmin_c^2 - 0.07*jan_precip_mm + 0.0043*jan_precip_mm^2 + 0.28) # calc based on  equation from lobell et al. 2006
@@ -123,15 +131,19 @@ max_yield <- max(yield$yield_tons)
 mean_yield <- mean(yield$yield_tons)
 
 # print the min, max, and mean
-print(paste("Minimum Yield:", round(min_yield, 2), "ton(s) per acre ;",
-                     "Maximum Yield:", round(max_yield, 2), "ton(s) per acre ;",
-                     "Mean Yield:", round(mean_yield, 2), "ton(s) per acre"))
+cat(paste0("Minimum Yield: ", round(min_yield, 2), "ton(s) per acre \n",
+                      "Maximum Yield: ", round(max_yield, 2), "ton(s) per acre \n",
+                      "Mean Yield: ", round(mean_yield, 2), "ton(s) per acre"))
 
 ```
 
-Below is how you can call in the function created on an R script.
+Below is how you can call in the function created on out R script (`almond_yield.R`). Our R script takes in the climate data frame as the input to the function and extracts the useful data from it as
+part of the model.
 
 ```{r, fuction_call}
+# -----------------------------------------------
+#                  Function Call 
+# -----------------------------------------------
 # sourcing in almond_yield function
 source("almond_yield.R")
 
