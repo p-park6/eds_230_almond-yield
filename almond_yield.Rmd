@@ -29,10 +29,10 @@ the relationship between inputs an outputs - on your diagram list what your inpu
 
 1.  Climate Dataset
 
--   Parametes:
+-   Parameters:
 
 1.  Precipitation in mm for January
-2.  Minimum temperature in Celcius for February
+2.  Minimum temperature in Celsius for February
 
 -   Outputs:
 

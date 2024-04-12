@@ -1,8 +1,8 @@
-#' Title
+#' Finding the almond yield from climate observations
 #'
-#' @param dataset 
+#' @param dataset The dataset that you are interested in that includes min and max for temperature, as well as precipitation data
 #'
-#' @return
+#' @return The minimum temperature (ton/acre), the maximum temperature (ton/acre), and the mean temperature of that month (ton/acre)
 #' @export
 #'
 #' @examples
@@ -10,9 +10,9 @@ almond_yield<- function(dataset) {
   
   # calculate minimum temperatures in Feb from each year
   min_temp <- dataset %>%
-    group_by(month, year) %>%
+    group_by(month, year) %>% # grouping by month and year
     filter(month == 2) %>% # select just feb
-    summarise(feb_tmin_c = mean(tmin_c)) %>% 
+    summarise(feb_tmin_c = mean(tmin_c)) %>% #find mean temp per year
     group_by() %>% 
     select(-month)# get the min
   
@@ -20,7 +20,7 @@ almond_yield<- function(dataset) {
   precip <- dataset %>%
     group_by(month, year) %>%
     filter(month == 1) %>% # select just jan
-    summarise(jan_precip_mm = sum(precip)) %>% 
+    summarise(jan_precip_mm = sum(precip)) %>% #find sum of precip per year
     group_by() %>% 
     select(-month)# get the sum
   
@@ -34,8 +34,10 @@ almond_yield<- function(dataset) {
   mean_yield <- mean(yield$yield_tons)
   
   # print the min, max, and mean
-  return(print(paste0("Minimum Yield:", round(min_yield, 2), "ton(s) per acre , ",
-                      "Maximum Yield:", round(max_yield, 2), "ton(s) per acre , ",
-                      "Mean Yield:", round(mean_yield, 2), "ton(s) per acre")))
+  return(cat(paste0("Minimum Yield: ", round(min_yield, 2), "ton(s) per acre, \n",
+                      "Maximum Yield: ", round(max_yield, 2), "ton(s) per acre, \n",
+                      "Mean Yield: ", round(mean_yield, 2), "ton(s) per acre")))
   
 }
+
+almond_yield(climate_data)
