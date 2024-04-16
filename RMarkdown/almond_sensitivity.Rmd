@@ -25,7 +25,7 @@ In your same groups -
 
     -   **expenses(parameters): water usage, loss of almond product, wages for workers**
 
-    -   **income(output): income = gross farm revenue - expenses**
+    -   **income(output): income = gross farm revenue - expenses** (want to normalize profits with discount rate. not required but shouldn't be complicated to apply it)
 
     -   from lecture 4-informal analysis:We will use output from our solarpv function as input into a function that estimates profit given a price - and also 'calls' another function to compute net present value `compute_NPV`
 
