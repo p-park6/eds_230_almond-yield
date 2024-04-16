@@ -1,0 +1,40 @@
+---
+title: "Almond Sensitivity Assignment 3"
+author: "Patty Park  & Vanessa Salgado"
+output:
+  html_document: default
+  code_folding: hide
+  toc: true
+  toc_float: true
+  pdf_document: default
+---
+
+In your same groups -
+
+-   Develop a profit model for your almond yield (you can make this up - think about what the parameters would be)
+
+    -   you might assume a baseline profit and then adjust according to the anomaly\
+    -   there are many ways to combine the almond yield and profit functions; you can have the profit function "call"/use the almond yield function; or create a wrapper function that calls them in sequence (first the almond yield and then the profit function)
+
+-   **Ideas for a profit model:**
+
+    -   **define the range: year? month?**
+
+    -   **gross farm revenue(inputs): sales(almond_yield \* price per almond)?, year**
+
+    -   **expenses(parameters): water usage, loss of almond product, wages for workers**
+
+    -   **income(output): income = gross farm revenue - expenses**
+
+    -   from lecture 4-informal analysis:We will use output from our solarpv function as input into a function that estimates profit given a price - and also 'calls' another function to compute net present value `compute_NPV`
+
+        -   **inputs: value, time, discount rate**
+        -   **output net present value of input value provide as some time in the future**
+
+-   Do a simple informal sensitivity analysis of almond yield profit using at least 2 parameters
+
+    -   **choose 2 parameters to change**
+
+-   Create 2 graphs of the results - you can decide what is the most meaningful graph
+
+-   Write a short paragraph (in the Rmarkdown document) to summarize you interpretation of your model results (e.g what do 'take away' from your model and sensitivity analysis)
