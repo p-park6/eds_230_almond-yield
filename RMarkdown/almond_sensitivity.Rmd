@@ -14,6 +14,7 @@ In your same groups -
 -   Develop a profit model for your almond yield (you can make this up - think about what the parameters would be)
 
     -   you might assume a baseline profit and then adjust according to the anomaly\
+    
     -   there are many ways to combine the almond yield and profit functions; you can have the profit function "call"/use the almond yield function; or create a wrapper function that calls them in sequence (first the almond yield and then the profit function)
 
 -   **Ideas for a profit model:**
