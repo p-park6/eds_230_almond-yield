@@ -41,10 +41,10 @@ climate_data <- read_csv(here("Data", "clim.csv"))
 test <- CopyOfalmond_yield(climate_data)
 
 #use gross_revenue function
-test_2 <- gross_revenue(test[3])
+test_2 <- gross_revenue(test[4])
 
 #use almond_profit_model function
-almond_profit_model(gross_revenue = test_2, almond_yield = test[3])
+almond_profit_model(gross_revenue = test_2, almond_yield = test[4])
 ```
 
 
@@ -96,14 +96,14 @@ site2 = gallons %>% map(~almond_profit_model(
   price_of_water = 0.007,  
   price_per_ton = 4000))
 
-results = water_parms %>% pmap(almond_profit_model, 
-                         gross_revenue = test_2, 
-                         almond_yield = test, 
-                         gallons = 9000,
-                         acres = 10, 
-                         prop_of_loss = 0.25,  
-                         price_of_water = 0.007,  
-                         price_per_ton = 4000)
+# results = water_parms %>% pmap(almond_profit_model, 
+#                          gross_revenue = test_2, 
+#                          almond_yield = test, 
+#                          gallons = 9000,
+#                          acres = 10, 
+#                          prop_of_loss = 0.25,  
+#                          price_of_water = 0.007,  
+#                          price_per_ton = 4000)
 
 ```
 
@@ -116,21 +116,28 @@ prop_of_loss = runif(min=base_thresh-deviation*base_thresh,
 
 eff = rnorm(mean=0.6, sd = 0.1, n=nsamples)
 
-loss_parms = cbind.data.frame(eff,prop_of_loss)
+loss_parms = cbind.data.frame(eff, prop_of_loss)
 
 # use pmap 
 # takes function name and then names of all parameters that don't change
-site3 = prop_of_loss %>% map(~almond_profit_model( 
-  gross_revenue = test_2, 
-  almond_yield = test, 
+site3 = loss_parms %>% pmap(~almond_profit_model( 
+  almond_yield = test[4],
+  gross_revenue = test_2,
   gallons = 9000,
   acres = 10, 
   prop_of_loss = .x,  
   price_of_water = 0.007,  
   price_per_ton = 4000))
 
-site3
 
+site3[[1]]
+length(site3)
+
+
+# now we can extract results from the list as above
+mean_elect = map_df(site3,`[`) 
+# and we can add the parameter values for each run
+mean_elect = cbind.data.frame(mean_elect, loss_parms)
 
 ```
 
