@@ -28,12 +28,14 @@ CopyOfalmond_yield<- function(dataset) {
   yield <- full_join(min_temp, precip) %>%
     mutate(yield_tons = -0.015*feb_tmin_c - 0.0046*feb_tmin_c^2 - 0.07*jan_precip_mm + 0.0043*jan_precip_mm^2 + 0.28) # calc based on equation from lobell et al. 2006
   
-  # calculate the min, max, and mean yield over the whole time period
-  min_yield <- min(yield$yield_tons)
-  max_yield <- max(yield$yield_tons)
-  mean_yield <- mean(yield$yield_tons)
+  return(yield)
   
-  # print the min, max, and mean
-  return(c(min_yield, max_yield, mean_yield))
+  # # calculate the min, max, and mean yield over the whole time period
+  # min_yield <- min(yield$yield_tons)
+  # max_yield <- max(yield$yield_tons)
+  # mean_yield <- mean(yield$yield_tons)
+  # 
+  # # print the min, max, and mean
+  # return(c(min_yield, max_yield, mean_yield))
   
 }
