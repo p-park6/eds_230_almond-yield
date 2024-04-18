@@ -151,6 +151,7 @@ loss_extract = cbind.data.frame(loss_extract, loss_parms)
 -   Create 2 graphs of the results - you can decide what is the most meaningful graph
 
 ```{r}
+#create graphs
 p1 = ggplot(gallon_extract, aes(yield_tons, gallons, col=eff))+geom_point(cex=2)#+
 #  labs(y="Mean Annual Electricity W", x="Threshold Radiation (kJ/m2)  \n above which energy production is more efficient")
 p2 = ggplot(gallon_extract, aes(eff, gallons, col=yield_tons))+geom_point(cex=2)#+
