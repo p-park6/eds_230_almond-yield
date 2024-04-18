@@ -153,11 +153,23 @@ loss_extract = cbind.data.frame(loss_extract, loss_parms)
 ```{r}
 #create graphs
 p1 = ggplot(gallon_extract, aes(gallons, gross_revenue, col=eff))+geom_point(cex=2)+
-  labs(y="Gross revenue (price/acre)", x="Gallons of water (gal)")
+  labs(y="Net Profit (price/acre)", x="Gallons of water (gal)")
 p2 = ggplot(gallon_extract, aes(eff, gross_revenue, col=gallons))+geom_point(cex=2)+
-  labs(y="Gross revenue (price/acre)", x="Efficiency")
+  labs(y="Net Profit (price/acre)", x="Efficiency")
 ggarrange(p1,p2)
 ```
-
+```{r}
+p3 = ggplot(loss_extract, aes(eff, gross_revenue, col=prop_of_loss))+geom_point(cex=2)+
+  labs(y="Net Profit (price/acre)", x="Efficiency")
+p3
+```
 
 -   Write a short paragraph (in the Rmarkdown document) to summarize you interpretation of your model results (e.g what do 'take away' from your model and sensitivity analysis)
+
+
+
+
+
+
+
+
