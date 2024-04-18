@@ -9,12 +9,52 @@ output:
   pdf_document: default
 ---
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+#call in libraries
+library(tidyverse)
+
+library(purrr)
+
+library(ggpubr)
+
+library(here)
+
+#call in r scripts
+source(here("R", "gross_revenue.R"))
+source(here("R", "almond_yield.R"))
+source(here("R", "CopyOfalmond_yield.R"))
+source(here("R", "almond_profit_model.R"))
+
+```
+
+
+```{r}
+#call in climate data csv
+climate_data <- read_csv(here("Data", "clim.csv"))
+
+```
+
+```{r}
+#use almond_yield function
+test <- CopyOfalmond_yield(climate_data)
+
+#use gross_revenue function
+test_2 <- gross_revenue(test[3])
+
+#use almond_profit_model function
+almond_profit_model(gross_revenue = test_2, almond_yield = test[3])
+```
+
+
+
 In your same groups -
 
 -   Develop a profit model for your almond yield (you can make this up - think about what the parameters would be)
 
     -   you might assume a baseline profit and then adjust according to the anomaly\
-    
+
     -   there are many ways to combine the almond yield and profit functions; you can have the profit function "call"/use the almond yield function; or create a wrapper function that calls them in sequence (first the almond yield and then the profit function)
 
 -   **Ideas for a profit model:**
@@ -23,7 +63,7 @@ In your same groups -
 
     -   **gross farm revenue(inputs): sales(almond_yield \* price per almond)?, year**
 
-    -   **expenses(parameters): water usage, loss of almond product, wages for workers**
+    -   **expenses(parameters): water usage, loss of almond product**
 
     -   **income(output): income = gross farm revenue - expenses** (want to normalize profits with discount rate. not required but shouldn't be complicated to apply it)
 
@@ -34,8 +74,74 @@ In your same groups -
 
 -   Do a simple informal sensitivity analysis of almond yield profit using at least 2 parameters
 
+```{r}
+nsamples = 300
+deviation = 0.15
+base_thresh = 9000
+gallons = runif(min=base_thresh-deviation*base_thresh,
+                max = base_thresh+deviation*base_thresh, n=nsamples)
+
+eff = rnorm(mean=0.6, sd = 0.1, n=nsamples)
+
+water_parms = cbind.data.frame(eff, gallons)
+
+# use pmap 
+# takes function name and then names of all parameters that don't change
+site2 = gallons %>% map(~almond_profit_model( 
+  gross_revenue = test_2, 
+  almond_yield = test, 
+  gallons =.x,
+  acres = 10, 
+  prop_of_loss = 0.25,  
+  price_of_water = 0.007,  
+  price_per_ton = 4000))
+
+results = water_parms %>% pmap(almond_profit_model, 
+                         gross_revenue = test_2, 
+                         almond_yield = test, 
+                         gallons = 9000,
+                         acres = 10, 
+                         prop_of_loss = 0.25,  
+                         price_of_water = 0.007,  
+                         price_per_ton = 4000)
+
+```
+
+```{r}
+nsamples = 300
+deviation = 0.15
+base_thresh = .25
+prop_of_loss = runif(min=base_thresh-deviation*base_thresh,
+                max = base_thresh+deviation*base_thresh, n=nsamples)
+
+eff = rnorm(mean=0.6, sd = 0.1, n=nsamples)
+
+loss_parms = cbind.data.frame(eff,prop_of_loss)
+
+# use pmap 
+# takes function name and then names of all parameters that don't change
+site3 = prop_of_loss %>% map(~almond_profit_model( 
+  gross_revenue = test_2, 
+  almond_yield = test, 
+  gallons = 9000,
+  acres = 10, 
+  prop_of_loss = .x,  
+  price_of_water = 0.007,  
+  price_per_ton = 4000))
+
+site3
+
+
+```
+
     -   **choose 2 parameters to change**
 
 -   Create 2 graphs of the results - you can decide what is the most meaningful graph
+
+```{r}
+
+site2df = data.frame(water = site3)
+```
+
 
 -   Write a short paragraph (in the Rmarkdown document) to summarize you interpretation of your model results (e.g what do 'take away' from your model and sensitivity analysis)
