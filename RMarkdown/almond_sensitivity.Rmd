@@ -38,13 +38,13 @@ climate_data <- read_csv(here("Data", "clim.csv"))
 
 ```{r}
 #use almond_yield function
-test <- CopyOfalmond_yield(climate_data)
+total_almond_yield <- CopyOfalmond_yield(climate_data)
 
 #use gross_revenue function
-test_2 <- gross_revenue(test[4])
+total_gross_revenue <- gross_revenue(total_almond_yield[4])
 
 #use almond_profit_model function
-almond_profit_model(gross_revenue = test_2, almond_yield = test[4])
+almond_profit_model(gross_revenue = total_gross_revenue, almond_yield = total_almond_yield[4])
 ```
 
 
@@ -75,69 +75,74 @@ In your same groups -
 -   Do a simple informal sensitivity analysis of almond yield profit using at least 2 parameters
 
 ```{r}
+#define the samples to create a uniform distribution
 nsamples = 300
 deviation = 0.15
 base_thresh = 9000
 gallons = runif(min=base_thresh-deviation*base_thresh,
                 max = base_thresh+deviation*base_thresh, n=nsamples)
 
+#generate samples for eff parameter
 eff = rnorm(mean=0.6, sd = 0.1, n=nsamples)
 
+#bind the two together onto a dataframe
 water_parms = cbind.data.frame(eff, gallons)
 
 # use pmap 
 # takes function name and then names of all parameters that don't change
-site2 = gallons %>% map(~almond_profit_model( 
-  gross_revenue = test_2, 
-  almond_yield = test, 
+gallon_pmap = water_parms %>% pmap(~almond_profit_model( 
+  almond_yield = total_almond_yield[4],
+  gross_revenue = total_gross_revenue,
   gallons =.x,
   acres = 10, 
   prop_of_loss = 0.25,  
   price_of_water = 0.007,  
   price_per_ton = 4000))
 
-# results = water_parms %>% pmap(almond_profit_model, 
-#                          gross_revenue = test_2, 
-#                          almond_yield = test, 
-#                          gallons = 9000,
-#                          acres = 10, 
-#                          prop_of_loss = 0.25,  
-#                          price_of_water = 0.007,  
-#                          price_per_ton = 4000)
+#View to see what the dataframe looks like and see how many we got
+gallon_pmap[[1]]
+length(gallon_pmap)
 
+#extract results from the two list created
+gallon_extract = map_df(gallon_pmap,`[`) #for gallon parameter
+#add the parameter values for each run
+gallon_extract = cbind.data.frame(gallon_extract, water_parms)
 ```
 
 ```{r}
+#define the samples to create a uniform distribution
 nsamples = 300
 deviation = 0.15
 base_thresh = .25
 prop_of_loss = runif(min=base_thresh-deviation*base_thresh,
                 max = base_thresh+deviation*base_thresh, n=nsamples)
 
+#generate samples for eff parameter
 eff = rnorm(mean=0.6, sd = 0.1, n=nsamples)
 
+#bind the two together onto a dataframe
 loss_parms = cbind.data.frame(eff, prop_of_loss)
 
 # use pmap 
 # takes function name and then names of all parameters that don't change
-site3 = loss_parms %>% pmap(~almond_profit_model( 
-  almond_yield = test[4],
-  gross_revenue = test_2,
+loss_pmap = loss_parms %>% pmap(~almond_profit_model( 
+  almond_yield = total_almond_yield[4],
+  gross_revenue = total_gross_revenue,
   gallons = 9000,
   acres = 10, 
   prop_of_loss = .x,  
   price_of_water = 0.007,  
   price_per_ton = 4000))
 
+#View to see what the dataframe looks like and see how many we got
+loss_pmap[[1]]
+length(loss_pmap)
 
-site3[[1]]
-length(site3)
 
-
-# now we can extract results from the list as above
-mean_elect = map_df(site3,`[`) 
-# and we can add the parameter values for each run
-mean_elect = cbind.data.frame(mean_elect, loss_parms)
+#extract results from the two list created
+loss_extract = map_df(loss_pmap,`[`) #for loss parameter
+#add the parameter values for each run
+loss_extract = cbind.data.frame(loss_extract, loss_parms)
 
 ```
 
@@ -146,8 +151,11 @@ mean_elect = cbind.data.frame(mean_elect, loss_parms)
 -   Create 2 graphs of the results - you can decide what is the most meaningful graph
 
 ```{r}
-
-site2df = data.frame(water = site3)
+p1 = ggplot(gallon_extract, aes(yield_tons, gallons, col=eff))+geom_point(cex=2)#+
+#  labs(y="Mean Annual Electricity W", x="Threshold Radiation (kJ/m2)  \n above which energy production is more efficient")
+p2 = ggplot(gallon_extract, aes(eff, gallons, col=yield_tons))+geom_point(cex=2)#+
+#  labs(y="Mean Annual Electricity W", x="Efficiency")
+ggarrange(p1,p2)
 ```
 
 
